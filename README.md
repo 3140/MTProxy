@@ -38,6 +38,8 @@ To start the proxy as a *permanent* daemon which starts after server restart too
 docker run -d -p443:443 --name=mtproxy --restart=always -v mtproxy:/data mtproxy/mtproxy
 ````
 
+Then obtain links for telegram app by reading container's logs with `docker logs -f mtproxy`.
+
 ### ℹ️ Tips
 
 - The secret will persist across container upgrades in a volume. It is a mandatory configuration parameter. If not provided, it will be generated automatically at container start. 
@@ -50,9 +52,13 @@ Please note that the proxy gets the Telegram core IP addresses at the start of t
 
 ## 🔖 Registering Your Proxy
 
-Once your MTProxy server is up and running go to [@MTProxybot](https://t.me/mtproxybot) and register your proxy with Telegram to gain access to usage statistics and monetization.
+Once your MTProxy server is up and running go to [@MTProxybot](https://t.me/mtproxybot) and register your proxy with Telegram to gain access to usage statistics and monetization. Then set the `TAG` environment variable.
 
 ## ⚙️ Custom Configuration
+
+Several options are configurable using environment variables.
+
+### `SECRET`/`SECRET_COUNT`
 
 If you need to specify a custom secret (say, if you are deploying multiple proxies with DNS load-balancing), you may pass the `SECRET` environment variable as 16 bytes in lower-case hexidecimals: `docker run ... -e SECRET=00baadf00d15abad1deaa51sbaadcafe mtproxy/mtproxy`
 
@@ -62,15 +68,31 @@ The proxy may be configured to accept up to 16 different secrets. You may specif
 
 **💡Example:** Set secret count: `docker run ... -e SECRET_COUNT=4 mtproxy/mtproxy`
 
+### `TAG`
+
 A custom advertisement tag may be provided using the `TAG` environment variable:
 
 **💡Example:** Setting Tag: `docker run ... -e TAG=3f40462915a3e6026a4d790127b95ded mtproxy/mtproxy`
 
 Please note that the tag is not persistent. You'll have to provide it as an environment variable every time you run an MTProto proxy container.
 
+### `WORKERS`
+
 A single worker process is expected to handle tens of thousands of clients on a modern CPU. For best performance we artificially limit the proxy to `60000` connections per core and run **one** workers by default. If you have many clients, be sure to adjust the `WORKERS` variable.
 
 **💡Example:** Setting number of workers to 16: `docker run ... -e WORKERS=16 mtproxy/mtproxy`
+
+### Other Environment Variables
+
+- `DEBUG`: Set to `true` to enable init script debugging.
+- `SECRET_FILE`: Where to store generated secret.Defaults to `/data/secret`
+- `PROXY_SECRET_FILE`: Optained from telegram servers for communication during init. Defaults to `/data/proxy.secret`
+- `PROXY_CONFIG_FILE`: Telegram core IP addresses obtained from telegram during init. Defaults to `/data/proxy.conf`
+- `IP`: Server external IP. If not provided, will be automatically detected
+- `INTERNAL_IP`: Server internal IP for NAT. If not provided, will be automatically detected,
+- `PORT`: Listening port. Defaults to `443`
+- `INTERNAL_PORT`: Monitoring port. Defaults to `2398`
+- `ARGS`: Additional custom args to be passed to `mtproto-proxy` binary
 
 ## 📈 Monitoring
 
