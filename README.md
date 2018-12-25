@@ -1,6 +1,6 @@
 The Telegram Messenger [MTProto proxy](https://github.com/TelegramMessenger/MTProxy) is a zero-configuration container that automatically sets up a proxy server that speaks Telegram's native MTProto.
 
-> **NOTE:** This project is an official updated version of [mtproxy/mtproxy](https://hub.docker.com/r/mtproxy/mtproxy) image which left unmaintained for a while.
+**NOTE:** This image is an official fork of [telegrammessenger/proxy](https://hub.docker.com/r/telegrammessenger/proxy) which left unmaintained for a while.
 
 ## Quick reference
 
