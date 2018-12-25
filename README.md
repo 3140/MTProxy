@@ -11,9 +11,9 @@ The Telegram Messenger [MTProto proxy](https://github.com/TelegramMessenger/MTPr
 
 First pull the docker image from docker-hub: `docker pull mtproxy/mtproxy`
 
-### 🧪 Testing Proxy
+### 🧪 For Test
 
-To start a testing container use:
+To quickly try it out use:
 
 ```bash
 docker run -it --rm -p443:443 mtproxy/mtproxy
@@ -23,7 +23,8 @@ The container's log output will contain the links to paste into the Telegram app
 
 ```
 [+] No secret passed. Will generate 1 random ones.
-[*] Final configuration:[*]   Secret 1: ...
+[*] Final configuration:
+[*]   Secret 1: ...
 [*]   tg:// link for secret 1 auto configuration: tg://proxy?server=...6&port=443&secret=...
 [*]   t.me link for secret 1: https://t.me/proxy?server=...&port=443&secret=...
 [*]   Tag: no tag
@@ -33,13 +34,13 @@ The container's log output will contain the links to paste into the Telegram app
 
 ### ⛅ Daemon
 
-To start the proxy as a *permanent* daemon which starts after server restart too:
+To start the proxy as a permanent daemon which starts after server/docker restart:
 
 ```bash
 docker run -d -p443:443 --name=mtproxy --restart=always -v mtproxy:/data mtproxy/mtproxy
 ````
 
-Then obtain links for telegram app by reading container's logs with `docker logs -f mtproxy`.
+Then obtain links for Telegram app by reading container's logs with `docker logs -f mtproxy`.
 
 ### ℹ️ Tips
 
@@ -85,7 +86,7 @@ A single worker process is expected to handle tens of thousands of clients on a 
 
 ### Other Environment Variables
 
-- `DEBUG`: Set to `true` to enable init script debugging.
+- `DEBUG`: Set to `true` to enable init script debugging
 - `SECRET_FILE`: Where to store generated secret.Defaults to `/data/secret`
 - `PROXY_SECRET_FILE`: Optained from telegram servers for communication during init. Defaults to `/data/proxy.secret`
 - `PROXY_CONFIG_FILE`: Telegram core IP addresses obtained from telegram during init. Defaults to `/data/proxy.conf`
