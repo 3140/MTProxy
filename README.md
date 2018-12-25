@@ -5,7 +5,7 @@
 
 The Telegram Messenger [MTProto proxy](https://github.com/TelegramMessenger/MTProxy) is a zero-configuration container that automatically sets up a proxy server that speaks Telegram's native MTProto.
 
-> **ℹ NOTE:** This image is an unofficial fork of [telegrammessenger/proxy](https://hub.docker.com/r/telegrammessenger/proxy) which left unmaintained for a while.
+ℹ️ This image is an unofficial fork of [telegrammessenger/proxy](https://hub.docker.com/r/telegrammessenger/proxy) which left unmaintained for a while.
 
 ##  🚀 Quick Reference
 
@@ -30,7 +30,7 @@ The container's log output will contain the links to paste into the Telegram app
 [*]   Make sure to fix the links in case you run the proxy on a different port.
 ```
 
-### ✅ Production Daemon
+### ⛅ Daemon
 
 To start the proxy as a *permanent* daemon which starts after server restart too:
 
@@ -38,11 +38,13 @@ To start the proxy as a *permanent* daemon which starts after server restart too
 docker run -d -p443:443 --name=mtproxy --restart=always -v mtproxy:/data mtproxy/mtproxy
 ````
 
-The secret will persist across container upgrades in a volume. It is a mandatory configuration parameter. If not provided, it will be generated automatically at container start. 
+### ℹ️ Tips
 
-> You may forward any other port to the container's `443` by changing left side port.
+- The secret will persist across container upgrades in a volume. It is a mandatory configuration parameter. If not provided, it will be generated automatically at container start. 
 
-> Be sure to fix the automatic configuration links if you do so.
+- You may forward any other port to the container's `443` by changing left side port.
+
+- Be sure to fix the automatic configuration links if you do so.
 
 Please note that the proxy gets the Telegram core IP addresses at the start of the container. We try to keep the changes to a minimum, but you should restart the container about once a day, just in case.
 
