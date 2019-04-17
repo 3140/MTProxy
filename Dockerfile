@@ -4,7 +4,7 @@ FROM debian:9-slim
 RUN apt-get update
 RUN apt-get install -y \
     git curl build-essential libssl-dev zlib1g-dev
-ENV COMMIT=b9950a18f8f289837545a5152c2fd423717c0b48
+ENV COMMIT=2c942119c4ee340c80922ba11d14fb3b10d5e654
 RUN git clone https://github.com/TelegramMessenger/MTProxy.git
 RUN cd MTProxy && git checkout $COMMIT && make
 
